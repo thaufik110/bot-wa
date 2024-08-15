@@ -14,9 +14,6 @@ const client = new Client({
     authStrategy: new LocalAuth({
         clientId: "client"
     }),
-    puppeteer: {
-        headless: false,
-    }
 });
 
 async function getGoogleImage(query, retries = 3) {
@@ -89,14 +86,8 @@ client.on('qr', (qr) => {
     qrcode.generate(qr, { small: true });
 });
 
-client.on('ready', async () => {
-    console.log('READY');
-    const debugWWebVersion = await client.getWWebVersion();
-    console.log(`WWebVersion = ${debugWWebVersion}`);
-
-    client.pupPage.on('error', function (err) {
-        console.log('Page error: ' + err.toString());
-    });
+client.on('ready', () => {
+    console.log('Client is ready!');
 });
 
 client.on('message', async msg => {
